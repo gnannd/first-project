@@ -1,0 +1,70 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <utility>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int dx[4]={1,0,-1,0};
+    int dy[4]={0,1,0,-1};
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>>v(n,vector<int>(m));
+    vector<vector<int>>ans(n,vector<int>(m,0));
+    vector<pair<int,int>>p;
+    ans[0][0]=1;
+    p.push_back({0,0});
+    string s;
+    for(int i=0;i<n;i++)
+    {
+        cin>>s;
+        for(int j=0;j<m;j++)
+        {
+            v[i][j]=int(s[j])-48;
+        }
+        
+    }
+    int k=0,cnt=1;
+    int a,b;
+    while(cnt)
+    {
+        a=p[k].first;
+        b=p[k].second;
+        k+=1;
+        cnt-=1;
+        for(int i=0;i<4;i++)
+        {
+            if(a+dx[i]>=0 and a+dx[i]<n and b+dy[i]>=0 and b+dy[i]<m)
+            {
+                if(ans[a+dx[i]][b+dy[i]]==0)
+                {
+                    if(v[a+dx[i]][b+dy[i]]==0)
+                    {
+                        ans[a+dx[i]][b+dy[i]]=-1;
+                        continue;
+                    }
+                    ans[a+dx[i]][b+dy[i]]=ans[a][b]+1;
+                    p.push_back({a+dx[i],b+dy[i]});
+                    cnt+=1;
+                }
+            }
+        }
+    }
+    
+    
+    cout<<ans[n-1][m-1];
+    return 0;
+    
+}
